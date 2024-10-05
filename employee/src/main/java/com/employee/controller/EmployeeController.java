@@ -1,6 +1,7 @@
 package com.employee.controller;
 
 import com.employee.dto.EmployeeDto;
+import com.employee.dto.responseDto.ApiResponseDto;
 import com.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,9 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/getEmployeeById" , params = "id")
-    public ResponseEntity<EmployeeDto> getEmployeeById(@RequestParam(value = "id") Long id) {
-        EmployeeDto employeeDto = employeeService.getEmployeeById(id);
-        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+    public ResponseEntity<ApiResponseDto> getEmployeeById(@RequestParam(value = "id") Long id) {
+        ApiResponseDto apiResponseDto = employeeService.getEmployeeById(id);
+        return new ResponseEntity<>(apiResponseDto, HttpStatus.OK);
     }
 
 }

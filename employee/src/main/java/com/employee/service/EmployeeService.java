@@ -1,9 +1,10 @@
 package com.employee.service;
 
 import com.employee.dto.EmployeeDto;
+import com.employee.dto.responseDto.ApiResponseDto;
 
 public interface EmployeeService {
     EmployeeDto saveEmployee(EmployeeDto employeeDto);
 
-    EmployeeDto getEmployeeById(Long id);
+    ApiResponseDto getEmployeeById(Long id);
 }
