@@ -13,6 +13,8 @@ Blocking and simple, but deprecated in Spring 5+.
 
 Modern, flexible, supports both blocking and non-blocking calls.
 Ideal for reactive systems and efficient communication.
+WebClient supports both synchronous and asynchronous communications
+
 
 3. Spring OpenFeign:
 
