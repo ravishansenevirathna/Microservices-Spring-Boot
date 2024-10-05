@@ -7,9 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(url = "http://localhost:8080",value = "DEPARTMENT-SERVICE")
+//for feignClient configure
+//@FeignClient(url = "http://localhost:8080",value = "DEPARTMENT-SERVICE")
+
+//for netflix in feignClient
+@FeignClient(value = "department-service")
 public interface ApiFeignClient {
 
+//    @GetMapping(path = "department/findByCode")
+//    DepartmentDto getDepartmentByCode(@RequestParam(value = "departmentCode") String departmentCode);
 
 //this way
     @GetMapping(path = "department/findByCode?departmentCode=")
