@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "department-service")
 public interface ApiFeignClient {
 
+//all the ways are correctly configured
+    @GetMapping(path = "department/findByCode", params = "departmentCode")
+    DepartmentDto getDepartmentByCode(@RequestParam(value = "departmentCode") String departmentCode);
+
 //    @GetMapping(path = "department/findByCode")
 //    DepartmentDto getDepartmentByCode(@RequestParam(value = "departmentCode") String departmentCode);
 
 //this way
-    @GetMapping(path = "department/findByCode?departmentCode=")
-    DepartmentDto getDepartmentByCode(@RequestParam(value = "departmentCode") String departmentCode);
+//    @GetMapping(path = "department/findByCode?departmentCode=")
+//    DepartmentDto getDepartmentByCode(@RequestParam(value = "departmentCode") String departmentCode);
 
 
 //or this way
