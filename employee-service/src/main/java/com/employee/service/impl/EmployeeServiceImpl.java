@@ -2,10 +2,12 @@ package com.employee.service.impl;
 
 import com.employee.dto.DepartmentDto;
 import com.employee.dto.EmployeeDto;
+import com.employee.dto.OrganizationDto;
 import com.employee.dto.responseDto.ApiResponseDto;
 import com.employee.entity.Employee;
 import com.employee.repository.EmployeeRepo;
 import com.employee.service.ApiFeignClient;
+import com.employee.service.ApiFeignClientTalkToOrganization;
 import com.employee.service.EmployeeService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -38,13 +40,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 //    using feignClient
      private ApiFeignClient apiFeignClient;
 
+     private ApiFeignClientTalkToOrganization apiFeignTalkToOrganization;
+
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 
-        Employee employee = new Employee(employeeDto.getId(), employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getEmail(), employeeDto.getDepartmentCode());
+        Employee employee = new Employee(employeeDto.getId(), employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getEmail(), employeeDto.getDepartmentCode(),employeeDto.getOrganizationCode());
         employeeRepo.save(employee);
-        EmployeeDto employeeDto1 = new EmployeeDto(employee.getId(), employee.getFirstName(),employee.getLastName(),employee.getEmail(),employee.getDepartmentCode());
+        EmployeeDto employeeDto1 = new EmployeeDto(employee.getId(), employee.getFirstName(),employee.getLastName(),employee.getEmail(),employee.getDepartmentCode(),employee.getOrganizationCode());
         return employeeDto1;
     }
 
@@ -107,13 +111,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
         DepartmentDto departmentDto = apiFeignClient.getDepartmentByCode(employee.getDepartmentCode());
+        OrganizationDto organizationDto = apiFeignTalkToOrganization.getOrganizationByCode(employee.getOrganizationCode());
 
 
-        EmployeeDto employeeDto1 = new EmployeeDto(employee.getId(), employee.getFirstName(),employee.getLastName(),employee.getEmail(),employee.getDepartmentCode());
+
+        EmployeeDto employeeDto1 = new EmployeeDto(employee.getId(), employee.getFirstName(),employee.getLastName(),employee.getEmail(),employee.getDepartmentCode(),employee.getOrganizationCode());
 
         ApiResponseDto apiResponseDto = new ApiResponseDto();
         apiResponseDto.setEmployeeDto(employeeDto1);
         apiResponseDto.setDepartmentDto(departmentDto);
+        apiResponseDto.setOrganizationDto(organizationDto);
 
         return apiResponseDto;
 
@@ -132,7 +139,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         departmentDto.setDepartmentName("DEVELOPMENT DEPT");
         departmentDto.setDepartmentDescription("DEVELOPMENT team for outstanding processes");
 
-        EmployeeDto employeeDto1 = new EmployeeDto(employee.getId(), employee.getFirstName(),employee.getLastName(),employee.getEmail(),employee.getDepartmentCode());
+        EmployeeDto employeeDto1 = new EmployeeDto(employee.getId(), employee.getFirstName(),employee.getLastName(),employee.getEmail(),employee.getDepartmentCode(),employee.getOrganizationCode());
 
         ApiResponseDto apiResponseDto = new ApiResponseDto();
         apiResponseDto.setEmployeeDto(employeeDto1);
